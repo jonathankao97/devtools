@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:devtools_app/src/bloc/bloc_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pedantic/pedantic.dart';
@@ -587,6 +588,7 @@ class SettingsDialog extends StatelessWidget {
 List<DevToolsScreen> get defaultScreens {
   final vmDeveloperToolsController = VMDeveloperToolsController();
   return <DevToolsScreen>[
+    DevToolsScreen<void>(const BlocScreen(), createController: () {}),
     DevToolsScreen<InspectorSettingsController>(
       const InspectorScreen(),
       createController: () => InspectorSettingsController(),
