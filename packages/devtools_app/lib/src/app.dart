@@ -14,6 +14,7 @@ import 'analytics/constants.dart' as analytics_constants;
 import 'analytics/provider.dart';
 import 'app_size/app_size_controller.dart';
 import 'app_size/app_size_screen.dart';
+import 'bloc/views/bloc_screen.dart';
 import 'common_widgets.dart';
 import 'config_specific/server/server.dart';
 import 'debugger/debugger_controller.dart';
@@ -90,9 +91,6 @@ class DevToolsAppState extends State<DevToolsApp> {
   bool get vmDeveloperModeEnabled => _vmDeveloperModeEnabled;
   bool _vmDeveloperModeEnabled;
 
-  bool get denseModeEnabled => _denseModeEnabled;
-  bool _denseModeEnabled;
-
   @override
   void initState() {
     super.initState();
@@ -116,13 +114,6 @@ class DevToolsAppState extends State<DevToolsApp> {
     preferences.vmDeveloperModeEnabled.addListener(() {
       setState(() {
         _vmDeveloperModeEnabled = preferences.vmDeveloperModeEnabled.value;
-      });
-    });
-
-    _denseModeEnabled = preferences.denseModeEnabled.value;
-    preferences.denseModeEnabled.addListener(() {
-      setState(() {
-        _denseModeEnabled = preferences.denseModeEnabled.value;
       });
     });
   }
@@ -212,10 +203,7 @@ class DevToolsAppState extends State<DevToolsApp> {
             if (tabs.isEmpty) {
               return DevToolsScaffold.withChild(
                 child: CenteredMessage(
-                  page != null
-                      ? 'The "$page" screen is not available for this application.'
-                      : 'No tabs available for this application.',
-                ),
+                    'The "$page" screen is not available for this application.'),
                 ideTheme: ideTheme,
                 analyticsProvider: widget.analyticsProvider,
               );
@@ -546,11 +534,6 @@ class SettingsDialog extends StatelessWidget {
             listenable: preferences.darkModeTheme,
             toggle: preferences.toggleDarkModeTheme,
           ),
-          _buildOption(
-            label: const Text('Use dense mode'),
-            listenable: preferences.denseModeEnabled,
-            toggle: preferences.toggleDenseMode,
-          ),
           if (isExternalBuild && isDevToolsServerAvailable)
             _buildOption(
               label: const Text('Enable analytics'),
@@ -605,6 +588,7 @@ class SettingsDialog extends StatelessWidget {
 List<DevToolsScreen> get defaultScreens {
   final vmDeveloperToolsController = VMDeveloperToolsController();
   return <DevToolsScreen>[
+    DevToolsScreen<void>(const BlocScreen(), createController: () {}),
     DevToolsScreen<InspectorSettingsController>(
       const InspectorScreen(),
       createController: () => InspectorSettingsController(),
