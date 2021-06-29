@@ -26,6 +26,9 @@ final serviceProvider = StreamProvider<VmServiceWrapper>((ref) async* {
 /// otherwise not be possible to read private properties.
 final evalProvider = libraryEvalProvider('dart:io');
 
+final blocEvalProvider =
+    libraryEvalProvider('package:flutter_bloc/flutter_bloc.dart');
+
 /// An [EvalOnDartLibrary] that has access to `provider`
 final providerEvalProvider =
     libraryEvalProvider('package:provider/src/provider.dart');

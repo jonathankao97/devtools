@@ -42,12 +42,14 @@ Future<InstanceRef> _resolveInstanceRefForPath(
       fromInstanceId: (path) async {
         if (path.instanceId == null) return null;
 
-        final eval = await ref.watch(evalProvider.future);
-        return eval.safeEval(
-          'value',
-          isAlive: isAlive,
-          scope: {'value': path.instanceId},
-        );
+        final eval = await ref.watch(blocEvalProvider.future);
+        return eval.safeEval('Bloc.observer.blocMap["${path.instanceId}"]',
+            isAlive: null);
+        // return eval.safeEval(
+        //   'value',
+        //   isAlive: isAlive,
+        //   scope: {'value': path.instanceId},
+        // );
       },
     );
   }

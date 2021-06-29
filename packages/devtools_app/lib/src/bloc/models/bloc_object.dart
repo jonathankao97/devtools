@@ -1,5 +1,4 @@
 class BlocObject {
-  BlocObject(this.instanceId);
-
-  final String instanceId;
+  BlocObject(this.blocId, this.blocType);
+  final String blocId, blocType;
 }

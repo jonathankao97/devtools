@@ -8,3 +8,12 @@ abstract class BlocListEvent extends Equatable {
 }
 
 class BlocListRequested extends BlocListEvent {}
+
+class BlocSelected extends BlocListEvent {
+  const BlocSelected(this.blocIdSelected);
+
+  final String blocIdSelected;
+
+  @override
+  List<Object> get props => [blocIdSelected];
+}
